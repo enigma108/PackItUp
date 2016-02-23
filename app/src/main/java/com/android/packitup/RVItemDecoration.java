@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+public class RVItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final String TAG = "DIVIDER_ITEM_DECORATION";
 
@@ -25,7 +25,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private int mOrientation;
     private int resid = 0;
 
-    public DividerItemDecoration(Context context, int orientation) {
+    public RVItemDecoration(Context context, int orientation) {
 
         //fetch the default list divider
         final TypedArray ta = context.obtainStyledAttributes(ATTRS);

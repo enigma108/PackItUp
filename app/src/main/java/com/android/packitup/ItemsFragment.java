@@ -1,6 +1,5 @@
 package com.android.packitup;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,7 +19,7 @@ public class ItemsFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private ItemAdapter mItemAdapter;
     //private Context context;
-    private DividerItemDecoration mDividerItemDecoration;
+    private RVItemDecoration mRVItemDecoration;
 
     /*@Override
     public void onAttach(Context context) {
@@ -50,8 +49,8 @@ public class ItemsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mDividerItemDecoration = new DividerItemDecoration(getContext(), getOrientation());
-        mRecyclerView.addItemDecoration(mDividerItemDecoration);
+        mRVItemDecoration = new RVItemDecoration(getContext(), getOrientation());
+        mRecyclerView.addItemDecoration(mRVItemDecoration);
 
         //init an adapter
         mItemAdapter = new ItemAdapter();
