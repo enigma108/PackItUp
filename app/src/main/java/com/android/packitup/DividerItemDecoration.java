@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
@@ -40,6 +41,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+
+        Log.d("DIVIDERITEMDECORATION", "onDraw");
 
         //get the left starting point after padding
         final int left = parent.getPaddingLeft();
