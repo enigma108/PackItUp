@@ -80,12 +80,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
             v.setOnTouchListener(this);
             mTextView = (TextView) v.findViewById(R.id.item_text);
             mAppCompatCheckBox = (AppCompatCheckBox)v.findViewById(R.id.checkbox);
-            View viewStyle = v.findViewById(R.id.view_style);
-            /*int[] attrs = new int[]{android.support.v7.appcompat.R.attr.selectableItemBackground};
-            TypedArray ta = c.obtainStyledAttributes(attrs);
-            int resid = ta.getResourceId(0, 0);
-            ta.recycle();
-            viewStyle.setBackgroundResource(resid);*/
             this.parent = parent;
         }
 
