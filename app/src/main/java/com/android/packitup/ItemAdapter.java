@@ -5,11 +5,14 @@ import android.content.res.TypedArray;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,26 +64,36 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder>{
         });
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
 
         // each data item is just a string in this case
         private TextView mTextView;
         private AppCompatCheckBox mAppCompatCheckBox;
         private ItemAdapter parent;
         private boolean checked = false;
+        private Context context;
 
         public ViewHolder(View v, Context c, ItemAdapter parent) {
             super(v);
 
+            this.context = c;
+            v.setOnTouchListener(this);
             mTextView = (TextView) v.findViewById(R.id.item_text);
             mAppCompatCheckBox = (AppCompatCheckBox)v.findViewById(R.id.checkbox);
             View viewStyle = v.findViewById(R.id.view_style);
-            int[] attrs = new int[]{android.support.v7.appcompat.R.attr.selectableItemBackground};
+            /*int[] attrs = new int[]{android.support.v7.appcompat.R.attr.selectableItemBackground};
             TypedArray ta = c.obtainStyledAttributes(attrs);
             int resid = ta.getResourceId(0, 0);
             ta.recycle();
-            viewStyle.setBackgroundResource(resid);
+            viewStyle.setBackgroundResource(resid);*/
             this.parent = parent;
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+
+            Toast.makeText(context, "Hi", Toast.LENGTH_SHORT).show();
+            return true;
         }
     }
 

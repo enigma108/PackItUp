@@ -1,6 +1,7 @@
 package com.android.packitup;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,13 +19,14 @@ public class ItemsFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private ItemAdapter mItemAdapter;
-    private Context context;
+    //private Context context;
+    private DividerItemDecoration mDividerItemDecoration;
 
-    @Override
+    /*@Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-    }
+    }*/
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,14 +47,28 @@ public class ItemsFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
 
         //init LinearLayoutManager
-        mLayoutManager = new LinearLayoutManager(context);
+        mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mDividerItemDecoration = new DividerItemDecoration(getContext(), getOrientation());
+        mRecyclerView.addItemDecoration(mDividerItemDecoration);
 
         //init an adapter
         mItemAdapter = new ItemAdapter();
         mRecyclerView.setAdapter(mItemAdapter);
 
         return view;
+    }
+
+    private int getOrientation() {
+        int orientation = getResources().getConfiguration().orientation;
+        if(orientation == Configuration.ORIENTATION_PORTRAIT) {
+            return LinearLayoutManager.VERTICAL;
+        }
+        if(orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            return LinearLayoutManager.HORIZONTAL;
+        }
+        return 0;
     }
 }
 
