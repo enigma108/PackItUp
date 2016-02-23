@@ -13,21 +13,25 @@ import android.view.View;
 
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
+    private static final String TAG = "DIVIDER_ITEM_DECORATION";
+
     private static final int[] ATTRS = new int[]{
-            android.R.attr.listDivider
+            android.R.attr.listDivider, android.support.v7.appcompat.R.attr.selectableItemBackground
     };
 
     //public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
     public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
     private Drawable mDivider;
     private int mOrientation;
+    private int resid = 0;
 
     public DividerItemDecoration(Context context, int orientation) {
 
         //fetch the default list divider
-        final TypedArray a = context.obtainStyledAttributes(ATTRS);
-        mDivider = a.getDrawable(0);
-        a.recycle();
+        final TypedArray ta = context.obtainStyledAttributes(ATTRS);
+        mDivider = ta.getDrawable(0);
+        resid = ta.getResourceId(1, 0);
+        ta.recycle();
         setOrientation(orientation);
     }
 
@@ -42,7 +46,19 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 
-        Log.d("DIVIDERITEMDECORATION", "onDraw");
+        Log.d(TAG, "onDraw");
+        drawDivider(c, parent);
+        setSelectableItemBackground(parent);
+    }
+
+    @Override
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        super.getItemOffsets(outRect, view, parent, state);
+
+        outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+    }
+
+    private void drawDivider(Canvas c, RecyclerView parent) {
 
         //get the left starting point after padding
         final int left = parent.getPaddingLeft();
@@ -66,10 +82,15 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        super.getItemOffsets(outRect, view, parent, state);
+    private void setSelectableItemBackground(RecyclerView parent) {
 
-        outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
+        final int childCount = parent.getChildCount();
+
+        //iterate through the children in the ViewGroup (RecyclerView)
+        for (int i = 0; i < childCount; i++) {
+            View child = parent.getChildAt(i);
+            child = child.findViewById(R.id.view_style);
+            child.setBackgroundResource(resid);
+        }
     }
 }
