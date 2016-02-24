@@ -19,7 +19,7 @@ public class RVItemDecoration extends RecyclerView.ItemDecoration {
             android.R.attr.listDivider, android.support.v7.appcompat.R.attr.selectableItemBackground
     };
 
-    //public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
+    public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
     public static final int VERTICAL_LIST = LinearLayoutManager.VERTICAL;
     private Drawable mDivider;
     private int mOrientation;
@@ -37,7 +37,7 @@ public class RVItemDecoration extends RecyclerView.ItemDecoration {
 
     public void setOrientation(int orientation) {
 
-        if (orientation != VERTICAL_LIST) {
+        if (orientation != HORIZONTAL_LIST && orientation != VERTICAL_LIST) {
             throw new IllegalArgumentException("invalid operation");
         }
         mOrientation = orientation;
@@ -47,8 +47,44 @@ public class RVItemDecoration extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 
         Log.d(TAG, "onDraw");
-        drawDivider(c, parent);
-        setSelectableItemBackground(parent);
+        if (mOrientation == VERTICAL_LIST) {
+            drawVertical(c, parent);
+        } else {
+            drawHorizontal(c, parent);
+        }
+        //setSelectableItemBackground(parent);
+    }
+
+    public void drawVertical(Canvas c, RecyclerView parent) {
+        final int left = parent.getPaddingLeft();
+        final int right = parent.getWidth() - parent.getPaddingRight();
+        final int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = parent.getChildAt(i);
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
+                    .getLayoutParams();
+            final int top = child.getBottom() + params.bottomMargin +
+                    Math.round(ViewCompat.getTranslationY(child));
+            final int bottom = top + mDivider.getIntrinsicHeight();
+            mDivider.setBounds(left, top, right, bottom);
+            mDivider.draw(c);
+        }
+    }
+
+    public void drawHorizontal(Canvas c, RecyclerView parent) {
+        final int top = parent.getPaddingTop();
+        final int bottom = parent.getHeight() - parent.getPaddingBottom();
+        final int childCount = parent.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View child = parent.getChildAt(i);
+            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
+                    .getLayoutParams();
+            final int left = child.getRight() + params.rightMargin +
+                    Math.round(ViewCompat.getTranslationX(child));
+            final int right = left + mDivider.getIntrinsicHeight();
+            mDivider.setBounds(left, top, right, bottom);
+            mDivider.draw(c);
+        }
     }
 
     @Override
@@ -56,30 +92,6 @@ public class RVItemDecoration extends RecyclerView.ItemDecoration {
         super.getItemOffsets(outRect, view, parent, state);
 
         outRect.set(0, 0, 0, mDivider.getIntrinsicHeight());
-    }
-
-    private void drawDivider(Canvas c, RecyclerView parent) {
-
-        //get the left starting point after padding
-        final int left = parent.getPaddingLeft();
-
-        //get the right ending point after padding
-        final int right = parent.getWidth() - parent.getPaddingRight();
-
-        //get all the children in the ViewGroup (RecyclerView)
-        final int childCount = parent.getChildCount();
-
-        //iterate through the children in the ViewGroup (RecyclerView)
-        for (int i = 0; i < childCount; i++) {
-
-            final View child = parent.getChildAt(i);
-            final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-            final int top = child.getBottom() + params.bottomMargin +
-                    Math.round(ViewCompat.getTranslationY(child));
-            final int bottom = top + mDivider.getIntrinsicHeight();
-            mDivider.setBounds(left, top, right, bottom);
-            mDivider.draw(c);
-        }
     }
 
     private void setSelectableItemBackground(RecyclerView parent) {
