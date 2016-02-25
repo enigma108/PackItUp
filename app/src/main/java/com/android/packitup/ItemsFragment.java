@@ -22,7 +22,7 @@ public class ItemsFragment extends Fragment {
     private ItemAdapter mItemAdapter;
     //private Context context;
     private RVItemDecoration mRVItemDecoration;
-    
+    private FloatingActionButton fab;
 
     /*@Override
     public void onAttach(Context context) {
@@ -75,7 +75,13 @@ public class ItemsFragment extends Fragment {
 
     private void initFAB(View view) {
 
+        fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View view) {
+            }
+        });
     }
 
     private int getOrientation() {
