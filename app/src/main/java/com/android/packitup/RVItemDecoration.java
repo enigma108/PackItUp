@@ -52,7 +52,7 @@ public class RVItemDecoration extends RecyclerView.ItemDecoration {
         } else {
             drawHorizontal(c, parent);
         }
-        setSelectableItemBackground(parent);
+        //setSelectableItemBackground(parent);
     }
 
     public void drawVertical(Canvas c, RecyclerView parent) {
