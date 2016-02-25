@@ -1,8 +1,10 @@
 package com.android.packitup;
 
+import android.support.v4.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,7 @@ public class ItemsFragment extends Fragment {
     private ItemAdapter mItemAdapter;
     //private Context context;
     private RVItemDecoration mRVItemDecoration;
+    
 
     /*@Override
     public void onAttach(Context context) {
@@ -39,6 +42,17 @@ public class ItemsFragment extends Fragment {
         Log.d(TAG, "onCreateView");
         View view = inflater.inflate(R.layout.items_main, container, false);
 
+        //initialize RecyclerView
+        initRecyclerView(view);
+
+        //initialize FloatingActionButton
+        initFAB(view);
+
+        return view;
+    }
+
+    private void initRecyclerView(View view) {
+
         //init recyclerview
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
 
@@ -49,6 +63,7 @@ public class ItemsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        //init decorations like line dividers and single touch feedback.
         mRVItemDecoration = new RVItemDecoration(getContext(), getOrientation());
         mRecyclerView.addItemDecoration(mRVItemDecoration);
 
@@ -56,7 +71,11 @@ public class ItemsFragment extends Fragment {
         mItemAdapter = new ItemAdapter();
         mRecyclerView.setAdapter(mItemAdapter);
 
-        return view;
+    }
+
+    private void initFAB(View view) {
+
+
     }
 
     private int getOrientation() {
