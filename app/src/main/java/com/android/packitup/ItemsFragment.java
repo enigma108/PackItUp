@@ -1,5 +1,6 @@
 package com.android.packitup;
 
+import android.app.Activity;
 import android.support.v4.app.FragmentManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ItemsFragment extends Fragment {
+public class ItemsFragment extends Fragment implements AddItemDialogFragment.OnItemAddListener{
 
     private static final String TAG = ItemsFragment.class.getSimpleName();
 
@@ -29,11 +30,6 @@ public class ItemsFragment extends Fragment {
         super.onAttach(context);
         this.context = context;
     }*/
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Nullable
     @Override
@@ -80,8 +76,21 @@ public class ItemsFragment extends Fragment {
 
             @Override
             public void onClick(View view) {
+                FragmentManager fm = getChildFragmentManager();
+                Fragment fragment = fm.findFragmentByTag("dialog_fragment");
+                if(fragment == null) {
+                    AddItemDialogFragment aidf = new AddItemDialogFragment();
+                    aidf.setOnItemAddListener(ItemsFragment.this);
+                    aidf.show(fm, "dialog_fragment");
+                }
             }
         });
+    }
+
+    @Override
+    public void onItemAdd(String item) {
+
+        Log.d(TAG, "item: " + item);
     }
 
     private int getOrientation() {
